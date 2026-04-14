@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Proof of Work | Hire Devs by Real Code</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #050505;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      color: #eef5ff;
+      line-height: 1.4;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* custom scroll */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0a0a0a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #00ffe0;
+      border-radius: 10px;
+      box-shadow: inset 0 0 4px #00ffe0;
+    }
+
+    /* floating orbs + atmosphere */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.45;
+      pointer-events: none;
+      z-index: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(0, 255, 224, 0.3), rgba(111, 0, 255, 0.2));
+      animation: floatOrb 18s infinite alternate ease-in-out;
+    }
+
+    .orb1 { width: 55vw; height: 55vw; top: -20vh; left: -15vw; background: radial-gradient(circle, #00ffe0, #6f00ff); opacity: 0.2; animation-duration: 22s; }
+    .orb2 { width: 45vw; height: 45vw; bottom: -10vh; right: -10vw; background: radial-gradient(circle, #6f00ff, #ff3bcb); opacity: 0.25; animation-duration: 26s; animation-delay: -3s; }
+    .orb3 { width: 35vw; height: 35vw; top: 40%; left: 60%; background: radial-gradient(circle, #0ff, #7700ff); opacity: 0.2; filter: blur(100px); animation-duration: 20s; animation-delay: -5s; }
+    .orb4 { width: 28vw; height: 28vw; bottom: 20%; left: 5%; background: radial-gradient(circle, #ff4d8c, #6f00ff); opacity: 0.18; animation-duration: 24s; animation-delay: -2s; }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(5%, 8%) scale(1.08); }
+    }
+
+    /* main content layer */
+    .site-container {
+      position: relative;
+      z-index: 2;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Glassmorphism core */
+    .glass-card, .feature-card, .demo-card, .login-glass {
+      background: rgba(10, 20, 28, 0.45);
+      backdrop-filter: blur(16px);
+      border-radius: 2rem;
+      border: 1px solid rgba(0, 255, 224, 0.2);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 0 0.5px rgba(0,255,224,0.1) inset;
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    .glass-card:hover, .feature-card:hover {
+      border-color: rgba(0, 255, 224, 0.6);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 15px rgba(0,255,224,0.3);
+    }
+
+    /* typography */
+    h1, h2, h3 {
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #00ffe0 0%, #6f00ff 60%, #ff3bcb 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      line-height: 1.1;
+      font-weight: 800;
+    }
+
+    /* section spacing */
+    section {
+      margin: 6rem 0 8rem;
+    }
+
+    .full-hero {
+      min-height: 95vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: linear-gradient(105deg, #00ffe0 0%, #6f00ff 100%);
+      border: none;
+      padding: 1rem 2.2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 60px;
+      color: #050505;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 12px rgba(0,255,224,0.5);
+      letter-spacing: -0.2px;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 28px #00ffe0, 0 10px 25px -5px rgba(0,0,0,0.5);
+      background: linear-gradient(105deg, #00ffe0, #a34cff);
+    }
+
+    .btn-glow-pulse {
+      background: rgba(0, 255, 224, 0.12);
+      border: 1.5px solid #00ffe0;
+      backdrop-filter: blur(8px);
+      color: #00ffe0;
+      font-weight: 600;
+      padding: 0.8rem 1.8rem;
+      border-radius: 40px;
+      transition: all 0.25s;
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(0,255,224,0.6);
+      animation: softPulse 2s infinite;
+    }
+
+    @keyframes softPulse {
+      0% { box-shadow: 0 0 4px #00ffe0; border-color: #00ffe0; }
+      50% { box-shadow: 0 0 18px #00ffe0, 0 0 5px #6f00ff; border-color: #b0fff5; }
+      100% { box-shadow: 0 0 4px #00ffe0; border-color: #00ffe0; }
+    }
+
+    .btn-glow-pulse:hover {
+      background: #00ffe020;
+      transform: scale(1.03);
+      animation: none;
+      box-shadow: 0 0 28px #00ffe0;
+    }
+
+    /* inputs */
+    .input-futuristic {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(0,255,224,0.4);
+      border-radius: 1rem;
+      padding: 0.9rem 1.2rem;
+      color: white;
+      width: 100%;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+
+    .input-futuristic:focus {
+      outline: none;
+      border-color: #00ffe0;
+      box-shadow: 0 0 12px #00ffe0, inset 0 0 4px #00ffe0;
+    }
+
+    /* toggle mock */
+    .toggle-switch-mock {
+      display: flex;
+      background: rgba(0,0,0,0.5);
+      border-radius: 3rem;
+      padding: 0.3rem;
+      gap: 0.4rem;
+      border: 1px solid rgba(0,255,224,0.3);
+    }
+    .toggle-option {
+      flex: 1;
+      text-align: center;
+      padding: 0.5rem;
+      border-radius: 2rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .toggle-option.active {
+      background: #00ffe0;
+      color: #050505;
+      box-shadow: 0 0 12px #00ffe0;
+    }
+
+    /* task cards */
+    .task-card {
+      background: rgba(12, 22, 35, 0.7);
+      border-radius: 1.2rem;
+      padding: 1.2rem;
+      transition: all 0.25s ease;
+      border-left: 3px solid #00ffe0;
+    }
+    .task-card:hover {
+      transform: translateY(-6px);
+      background: rgba(0, 255, 224, 0.1);
+      box-shadow: 0 12px 28px -8px rgba(0,255,224,0.3);
+    }
+    .skill-tag {
+      background: rgba(111, 0, 255, 0.5);
+      border-radius: 20px;
+      padding: 0.2rem 0.8rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+    .time-badge {
+      background: rgba(0,0,0,0.6);
+      border-radius: 20px;
+      padding: 0.2rem 0.8rem;
+      font-size: 0.7rem;
+      border: 0.5px solid cyan;
+    }
+
+    /* anti-cheat banner */
+    .anti-cheat-banner {
+      background: rgba(255, 30, 60, 0.2);
+      border-left: 5px solid #ff3366;
+      backdrop-filter: blur(8px);
+      border-radius: 1rem;
+      padding: 1rem;
+      margin-top: 1rem;
+      box-shadow: 0 0 12px rgba(255, 51, 102, 0.5);
+      animation: glowRedPulse 1.8s infinite alternate;
+    }
+    @keyframes glowRedPulse {
+      0% { box-shadow: 0 0 4px #ff3366; background: rgba(255, 30, 60, 0.15);}
+      100% { box-shadow: 0 0 18px #ff3366; background: rgba(255, 30, 60, 0.3);}
+    }
+
+    /* leaderboard & progress */
+    .leaderboard-entry {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(0,255,224,0.2);
+    }
+    .progress-container {
+      flex: 2;
+      min-width: 120px;
+    }
+    .progress-bar-bg {
+      background: #1f2a3a;
+      border-radius: 30px;
+      height: 8px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #00ffe0, #6f00ff);
+      border-radius: 30px;
+      transition: width 1s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+    }
+    .hire-mini {
+      background: none;
+      border: 1px solid #00ffe0;
+      border-radius: 30px;
+      padding: 0.3rem 1rem;
+      color: #00ffe0;
+      font-weight: bold;
+      transition: all 0.2s;
+      animation: btnPulseHire 1.5s infinite;
+    }
+    @keyframes btnPulseHire {
+      0% { box-shadow: 0 0 0 0 #00ffe040; border-color: #00ffe0;}
+      70% { box-shadow: 0 0 0 8px rgba(0,255,224,0); border-color: #b0ffe0;}
+      100% { box-shadow: 0 0 0 0 rgba(0,255,224,0);}
+    }
+    .hire-mini:hover {
+      background: #00ffe0;
+      color: #050505;
+      transform: scale(1.02);
+    }
+
+    /* features grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.8rem;
+      margin-top: 3rem;
+    }
+    .feature-card {
+      padding: 1.8rem;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .feature-card:hover {
+      transform: translateY(-8px);
+      border-color: #00ffe0;
+      box-shadow: 0 18px 30px -12px rgba(0,255,224,0.4);
+    }
+
+    /* scroll reveal (opacity+translate) */
+    .reveal-step {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.1), transform 0.7s ease;
+    }
+    .reveal-step.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* responsive */
+    @media (max-width: 780px) {
+      .site-container {
+        padding: 0 1.2rem;
+      }
+      section {
+        margin: 4rem 0;
+      }
+      .hero-title {
+        font-size: 2.8rem;
+      }
+      .leaderboard-entry {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    /* glowing divider */
+    .glow-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #00ffe0, #6f00ff, transparent);
+      width: 100%;
+      margin: 2rem 0 1rem;
+    }
+
+    /* extra polish */
+    code, .code-mock {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+    .demo-card {
+      padding: 2rem;
+      margin-bottom: 3rem;
+    }
+    .step-number {
+      font-size: 1rem;
+      letter-spacing: 2px;
+      font-weight: 500;
+      color: #00ffe0;
+    }
+    button {
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .footer {
+      text-align: center;
+      padding: 2rem 0 3rem;
+      font-size: 0.85rem;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="orb orb4"></div>
+
+  <div class="site-container">
+    <!-- HERO SECTION (fullscreen impact) -->
+    <section class="full-hero">
+      <div style="max-width: 850px; margin: 0 auto;">
+        <div class="reveal-step visible" style="transition-delay: 0s;">
+          <h1 class="hero-title">
+            Tired of <span class="gradient-text">Fake Resumes?</span>
+          </h1>
+          <p style="font-size: 1.5rem; margin: 1.5rem 0 2rem; font-weight: 400; backdrop-filter: blur(4px);">
+            Hire developers based on <strong>real proof of work</strong> — tasks, anti-cheat monitoring, and live leaderboards.
+          </p>
+          <a href="#live-demo" style="text-decoration: none;">
+            <button class="btn-primary">🎬 Watch Live Demo</button>
+          </a>
+          <div style="margin-top: 3rem;">
+            <p style="font-size: 0.9rem; opacity: 0.7;">✨ No more guessing. Verified skill signals. ✨</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: LIVE DEMO WALKTHROUGH (CORE) -->
+    <section id="live-demo">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <h2 style="font-size: clamp(2rem, 5vw, 3rem);">Live demo: <span class="gradient-text">How It Works</span></h2>
+        <div class="glow-divider" style="width: 120px; margin: 1rem auto;"></div>
+      </div>
+
+      <!-- STEP 1: LOGIN SCREEN -->
+      <div class="demo-card glass-card reveal-step" id="step1">
+        <div class="step-number">STEP 01 — LOGIN & ROLE</div>
+        <h3 style="margin: 0.5rem 0 1.5rem;">Candidate or Company?</h3>
+        <div class="login-glass" style="max-width: 480px; margin: 0 auto; padding: 1.8rem; border-radius: 1.8rem;">
+          <div style="margin-bottom: 1rem;">
+            <input type="email" placeholder="work@email.com" class="input-futuristic" value="student@proof.work">
+          </div>
+          <div style="margin-bottom: 1.5rem;">
+            <input type="password" placeholder="••••••••" class="input-futuristic" value="proof123">
+          </div>
+          <div class="toggle-switch-mock" style="margin-bottom: 1.8rem;">
+            <div class="toggle-option active">👩‍💻 Student</div>
+            <div class="toggle-option">🏢 Company</div>
+          </div>
+          <button class="btn-primary" style="width: 100%;">Sign in →</button>
+        </div>
+        <p class="step-note" style="margin-top: 1rem; font-size: 0.8rem; text-align: center; opacity: 0.7;">⚡ Glow focus — seamless auth</p>
+      </div>
+
+      <!-- STEP 2: STUDENT DASHBOARD (task cards) -->
+      <div class="demo-card glass-card reveal-step" id="step2">
+        <div class="step-number">STEP 02 — STUDENT DASHBOARD</div>
+        <h3 style="margin: 0.5rem 0 1.2rem;">Real-world tasks & skill validation</h3>
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+          <div class="task-card">
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap;"><strong>🛠️ Build OAuth2 Gateway</strong> <span class="time-badge">⏱️ 2h left</span></div>
+            <div style="display: flex; gap: 0.5rem; margin: 0.6rem 0;"><span class="skill-tag">Node.js</span><span class="skill-tag">JWT</span><span class="skill-tag">Express</span></div>
+            <div style="font-size: 0.8rem;">✅ 142/200 test passes • trending</div>
+          </div>
+          <div class="task-card">
+            <div style="display: flex; justify-content: space-between;"><strong>📊 Optimize Postgres Query</strong> <span class="time-badge">⏱️ 45 min</span></div>
+            <div style="display: flex; gap: 0.5rem; margin: 0.6rem 0;"><span class="skill-tag">SQL</span><span class="skill-tag">Performance</span></div>
+            <div style="font-size: 0.8rem;">🔥 98% efficiency gain expected</div>
+          </div>
+          <div class="task-card">
+            <div style="display: flex; justify-content: space-between;"><strong>🎨 Design System – React</strong> <span class="time-badge">⏱️ 1 day</span></div>
+            <div style="display: flex; gap: 0.5rem; margin: 0.6rem 0;"><span class="skill-tag">React</span><span class="skill-tag">Figma</span><span class="skill-tag">Tailwind</span></div>
+          </div>
+        </div>
+        <p style="margin-top: 1.2rem; font-size: 0.8rem; text-align: right;">⭐ Top performers rise on leaderboard</p>
+      </div>
+
+      <!-- STEP 3: TASK SUBMISSION + ANTI-CHEAT -->
+      <div class="demo-card glass-card reveal-step" id="step3">
+        <div class="step-number">STEP 03 — TASK SUBMISSION (ANTI-CHEAT)</div>
+        <h3 style="margin: 0.5rem 0 1rem;">Secure code environment</h3>
+        <div>
+          <textarea rows="5" class="input-futuristic code-mock" style="width:100%; font-family: monospace;" placeholder="Write your solution...&#10;function proveWork() {&#10;  return 'verifiable commit';&#10;}">async function solveTask() {
+  // Live proctoring active
+  return "proof_of_work_verified";
+}</textarea>
+          <div class="anti-cheat-banner">
+            ⚠️ <strong>ANTI-CHEAT ACTIVE</strong> • Paste detected • Tab switch tracked • LLM pattern analysis
+          </div>
+        </div>
+        <div style="margin-top: 1rem; display: flex; justify-content: flex-end;">
+          <span class="skill-tag" style="background: #00ffe030;">🔒 Integrity score: 100%</span>
+        </div>
+      </div>
+
+      <!-- STEP 4: COMPANY DASHBOARD + LEADERBOARD + HIRE BUTTON -->
+      <div class="demo-card glass-card reveal-step" id="step4">
+        <div class="step-number">STEP 04 — COMPANY DASHBOARD</div>
+        <h3 style="margin: 0.5rem 0 1.2rem;">Hire based on real-time leaderboard</h3>
+        <div style="background: rgba(0,0,0,0.4); border-radius: 1.5rem; padding: 1rem;">
+          <div style="font-weight: bold; margin-bottom: 1rem;">🏆 TOP 3 CANDIDATES (Proof Score)</div>
+          <div class="leaderboard-entry">
+            <span><strong>1. Alexandra Chen</strong> 🔥</span>
+            <div class="progress-container"><div class="progress-bar-bg"><div class="progress-fill progress-fill-1" style="width: 0%;"></div></div><span style="font-size:0.7rem;">98% match</span></div>
+            <button class="hire-mini">Hire →</button>
+          </div>
+          <div class="leaderboard-entry">
+            <span><strong>2. Marcus Velez</strong> ⚡</span>
+            <div class="progress-container"><div class="progress-bar-bg"><div class="progress-fill progress-fill-2" style="width: 0%;"></div></div><span style="font-size:0.7rem;">94% match</span></div>
+            <button class="hire-mini">Hire →</button>
+          </div>
+          <div class="leaderboard-entry">
+            <span><strong>3. Priya Kapoor</strong> 🚀</span>
+            <div class="progress-container"><div class="progress-bar-bg"><div class="progress-fill progress-fill-3" style="width: 0%;"></div></div><span style="font-size:0.7rem;">91% match</span></div>
+            <button class="hire-mini">Hire →</button>
+          </div>
+          <div class="leaderboard-entry">
+            <span>+ 47 more candidates</span>
+            <div class="progress-container"><div class="progress-bar-bg"><div class="progress-fill" style="width:0%; background:#6f00ff;"></div></div></div>
+            <button class="hire-mini" style="opacity:0.7;">View all</button>
+          </div>
+        </div>
+        <div style="margin-top: 1.2rem; display: flex; gap: 1rem; justify-content: center;">
+          <span class="skill-tag">📈 Live Activity</span>
+          <span class="skill-tag">✅ AI-Verified Submissions</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: CORE FEATURES GRID -->
+    <section>
+      <div style="text-align: center;">
+        <h2 class="gradient-text" style="font-size: 2.5rem;">The future of technical hiring</h2>
+        <div class="glow-divider" style="width: 80px; margin: 1rem auto;"></div>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card reveal-step"><div style="font-size: 2rem;">🧩</div><h3>Real Work Tasks</h3><p>Simulate production tickets & real-world challenges</p></div>
+        <div class="feature-card reveal-step"><div style="font-size: 2rem;">🛡️</div><h3>Anti-Cheat Monitoring</h3><p>Tab switch, paste detection, and AI pattern analysis</p></div>
+        <div class="feature-card reveal-step"><div style="font-size: 2rem;">🏆</div><h3>Leaderboard Hiring</h3><p>Ranked by proof-of-work score, not self-promotion</p></div>
+        <div class="feature-card reveal-step"><div style="font-size: 2rem;">👁️</div><h3>Live Student Tracking</h3><p>Real-time progress on tasks, heatmaps & insights</p></div>
+        <div class="feature-card reveal-step"><div style="font-size: 2rem;">📢</div><h3>Job Alerts</h3><p>Smart matches based on verified skill graph</p></div>
+        <div class="feature-card reveal-step"><div style="font-size: 2rem;">💬</div><h3>Messaging System</h3><p>Direct chat with top candidates, code snippets preview</p></div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: WHY THIS MATTERS (Impactful) -->
+    <section style="text-align: center;">
+      <div class="glass-card" style="padding: 3rem 2rem; max-width: 900px; margin: 0 auto;">
+        <h2 style="font-size: clamp(2rem, 4vw, 3rem);"><span class="gradient-text">Resumes lie. Work doesn't.</span></h2>
+        <p style="font-size: 1.4rem; margin: 1.5rem 0;">See skills, not claims. 84% faster quality hires.</p>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; margin-top: 2rem;">
+          <div><strong style="font-size: 2rem; color:#00ffe0;">0</strong><br/>Resume fluff</div>
+          <div><strong style="font-size: 2rem; color:#6f00ff;">100%</strong><br/>Proof-driven trust</div>
+          <div><strong style="font-size: 2rem; color:#ff3bcb;">3x</strong><br/>Retention rate</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: FINAL CTA (irresistible) -->
+    <section style="text-align: center;">
+      <div class="reveal-step">
+        <h2 style="font-size: clamp(2rem, 5vw, 3.5rem);">Ready to build elite teams?</h2>
+        <button class="btn-primary" style="padding: 1.4rem 3rem; font-size: 1.5rem; margin: 2rem 0; animation: softPulse 1.8s infinite;">✨ Enter Platform ✨</button>
+        <p style="font-size: 1rem; opacity: 0.8;">Start hiring based on proof, not promises. Join the work-first revolution.</p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div class="glow-divider"></div>
+    <footer class="footer">
+      <p>© 2025 Proof of Work Hiring Platform — where code defines talent</p>
+      <p style="margin-top: 0.5rem;">⚡ Anti-cheat • leaderboard • verified work ⚡</p>
+    </footer>
+  </div>
+
+  <!-- minimal JS for scroll reveal + progress bars animation on step4 visible -->
+  <script>
+    (function() {
+      // Scroll reveal using Intersection Observer (lightweight, no external)
+      const revealElements = document.querySelectorAll('.reveal-step');
+      const progressFills = document.querySelectorAll('.progress-fill-1, .progress-fill-2, .progress-fill-3');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            // special: if we detect step4 container (the demo-card containing progress bars) reveal step also triggers progress bar animation
+            if (entry.target.id === 'step4' || (entry.target.classList.contains('demo-card') && entry.target.querySelector('.leaderboard-entry'))) {
+              // animate progress bars width
+              const fill1 = document.querySelector('.progress-fill-1');
+              const fill2 = document.querySelector('.progress-fill-2');
+              const fill3 = document.querySelector('.progress-fill-3');
+              if (fill1) fill1.style.width = '98%';
+              if (fill2) fill2.style.width = '94%';
+              if (fill3) fill3.style.width = '91%';
+              // also animate extra bar if needed
+              const extraFill = document.querySelector('.leaderboard-entry:last-child .progress-fill');
+              if (extraFill) extraFill.style.width = '68%';
+            }
+          }
+        });
+      }, { threshold: 0.2, rootMargin: "0px 0px -60px 0px" });
+      
+      revealElements.forEach(el => observer.observe(el));
+      
+      // also manually trigger if any step already visible on load
+      setTimeout(() => {
+        revealElements.forEach(el => {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight - 100) {
+            el.classList.add('visible');
+            if (el.id === 'step4') {
+              const fill1 = document.querySelector('.progress-fill-1');
+              const fill2 = document.querySelector('.progress-fill-2');
+              const fill3 = document.querySelector('.progress-fill-3');
+              if (fill1) fill1.style.width = '98%';
+              if (fill2) fill2.style.width = '94%';
+              if (fill3) fill3.style.width = '91%';
+              const extraFill = document.querySelector('.leaderboard-entry:last-child .progress-fill');
+              if (extraFill) extraFill.style.width = '68%';
+            }
+          }
+        });
+      }, 200);
+      
+      // smooth scroll for watch demo button
+      const demoBtn = document.querySelector('a[href="#live-demo"]');
+      if(demoBtn) {
+        demoBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          document.querySelector('#live-demo').scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+      // final CTA hover pulse ready
+      const finalCta = document.querySelector('.btn-primary:last-of-type');
+      if(finalCta) finalCta.style.animation = 'softPulse 1.5s infinite';
+    })();
+  </script>
+</body>
+</html>
